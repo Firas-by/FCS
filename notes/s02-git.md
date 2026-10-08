@@ -27,3 +27,33 @@ Réponse :
 Réponse :
 - Git Credential Manager (GCM) enregistre le jeton d'authentification sécurisé dans le **Gestionnaire d'identification Windows** (Windows Credential Manager, entrée `git:https://github.com`).
 - Sur un poste partagé de l'université ou du laboratoire, il faut obligatoirement supprimer ce jeton en fin de séance pour empêcher la personne suivante d'effectuer des push en notre nom. Sur un ordinateur personnel, on peut le conserver pour ne pas avoir à se réauthentifier à chaque fois.
+
+## 6. Historique depuis lab-01
+
+Nombre de commits depuis lab-01 : **4**
+
+```
+b4362e3 Ajouter le README du projet
+165f405 Ajouter la capture de la page a-propos
+2e593e6 Ajouter la page a-propos
+0fbc088 Ajouter les notes Git de la session 02
+```
+
+Fichiers modifiés depuis lab-01 :
+
+```
+ README.md                          |  91 +++++++++++++++++++++++--------------
+ notes/s02-git.md                   |  29 ++++++++++++
+ resources/views/a-propos.blade.php |  23 ++++++++++
+ routes/web.php                     |   7 +++
+ screenshots/s02-a-propos.png       | Bin 0 -> 18411 bytes
+ 5 files changed, 116 insertions(+), 34 deletions(-)
+```
+
+Ce que git tag -n affiche pour lab-01 :
+
+```
+lab-01          lab-01
+```
+
+Le tag `lab-01` porte le même texte que son message de commit (`lab-01`). Il est fixé sur le commit de fin de la session 01 et ne bougera jamais, même si de nouveaux commits sont ajoutés sur `main`.
