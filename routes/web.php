@@ -28,3 +28,10 @@ Route::get('/heure', function () {
 });
 
 Route::get('/version', fn () => 'Laravel '.app()->version().' - PHP '.PHP_VERSION);
+
+Route::get('/a-propos', function () {
+    return view('a-propos', [
+        'auteur' => 'Firas ben yacoub',
+        'groupe' => 'MDW32',
+    ]);
+});
