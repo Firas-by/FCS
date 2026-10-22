@@ -60,3 +60,17 @@ it('removes the pivot rows when a post is deleted', function () {
     $this->assertDatabaseMissing('post_tag', ['post_id' => $post->id]);
     $this->assertDatabaseHas('tags', ['id' => $tag->id]);
 });
+
+it('displays related published posts of the same category without lazy loading', function () {
+    $category = Category::factory()->create();
+    $currentPost = Post::factory()->published()->create(['category_id' => $category->id, 'title' => 'Article courant']);
+    $relatedPublished = Post::factory(2)->published()->create(['category_id' => $category->id]);
+    $relatedDraft = Post::factory()->create(['category_id' => $category->id, 'title' => 'Brouillon meme categorie']);
+
+    $this->get(route('posts.show', $currentPost))
+        ->assertOk()
+        ->assertSee('Dans la même catégorie')
+        ->assertSee($relatedPublished[0]->title)
+        ->assertSee($relatedPublished[1]->title)
+        ->assertDontSee('Brouillon meme categorie');
+});
