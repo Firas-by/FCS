@@ -6,23 +6,25 @@ Auteur : Firas ben yacoub, groupe MDW32.
 
 Mini-CMS évoluera au fil du semestre vers une petite plateforme de publication : pages publiques, back-office authentifié, API JSON et tests Pest. Chaque session se termine par un tag Git (`lab-01`, `lab-01b`, puis un tag par session).
 
-## État actuel (tag lab-02b)
+## État actuel (tag lab-03)
 
-- Pages construites avec des composants Blade anonymes : `x-navbar`, `x-nav-link`, `x-post-card`, `x-alert`, `x-page-header`.
-- Lien actif dans la navigation avec `request()->routeIs()`.
-- Articles toujours stockés dans un tableau PHP, sans base de données pour l'instant.
+- Articles enregistrés dans une base SQLite et lus avec le modèle Eloquent `Post`.
+- Table `posts` créée par une migration : après un clone, `php artisan migrate` la recrée (vide).
+- Liste paginée, détail par liaison modèle-route, formulaire de création avec validation côté serveur.
+- Premiers tests Pest : `php artisan test`.
 
 ## Routes disponibles
 
-| Méthode | URI | Réponse |
-|---|---|---|
-| GET | `/` | Vue `welcome` (page d'accueil Laravel) |
-| GET | `/bonjour` | Texte brut de bienvenue |
-| GET | `/bonjour-court` | Texte brut (fonction fléchée) |
-| GET | `/bienvenue` | Vue `bienvenue` avec le nom de l'étudiant, groupe et cours |
-| GET | `/heure` | Vue `heure` avec l'heure (H:i) et la date (d/m/Y) en heure de Tunis |
-| GET | `/version` | Chaîne `Laravel x.x.x - PHP x.x.x` |
-| GET | `/a-propos` | Vue `a-propos` avec le nom de l'auteur et le groupe |
+| Méthode | URI | Nom | Action |
+|---|---|---|---|
+| GET | `/` | `home` | `PageController@home` |
+| GET | `/a-propos` | `about` | `PageController@about` |
+| GET | `/heure` | `time` | `PageController@time` |
+| GET | `/posts` | `posts.index` | `PostController@index` |
+| GET | `/posts/archive/{year}` | `posts.archive` | `PostController@archive` |
+| GET | `/posts/create` | `posts.create` | `PostController@create` |
+| POST | `/posts` | `posts.store` | `PostController@store` |
+| GET | `/posts/{post}` | `posts.show` | `PostController@show` |
 
 ## Prérequis
 
@@ -83,3 +85,9 @@ Ouvrir ensuite http://localhost:8000 (adresse de l'application, différente de l
 ### Session 04
 
 ![Liste des articles](screenshots/s04-articles.png)
+
+### Session 05
+
+![Liste paginée des articles](screenshots/s05-articles.png)
+
+![Formulaire avec erreurs de validation](screenshots/s05-formulaire.png)
