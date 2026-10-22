@@ -77,3 +77,21 @@ it('deletes a post', function () {
 
     $this->assertDatabaseMissing('posts', ['id' => $post->id]);
 });
+
+it('toggles post publication status', function () {
+    $post = Post::create(postData(['is_published' => false, 'published_at' => null]));
+
+    $this->patch(route('posts.publication', $post))
+        ->assertRedirect(route('posts.show', $post));
+
+    $post->refresh();
+    expect($post->is_published)->toBeTrue()
+        ->and($post->published_at)->not->toBeNull();
+
+    $this->patch(route('posts.publication', $post))
+        ->assertRedirect(route('posts.show', $post));
+
+    $post->refresh();
+    expect($post->is_published)->toBeFalse()
+        ->and($post->published_at)->toBeNull();
+});
