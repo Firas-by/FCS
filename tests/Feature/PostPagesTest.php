@@ -49,3 +49,26 @@ it('shows the create form', function () {
         ->assertOk()
         ->assertSee('Nouvel article');
 });
+
+it('shows the latest published posts on home page and ignores drafts', function () {
+    Post::create([
+        'title' => 'Article publié récent',
+        'slug' => 'article-publie-recent',
+        'body' => 'Contenu de l\'article publié récent.',
+        'is_published' => true,
+        'published_at' => now(),
+    ]);
+
+    Post::create([
+        'title' => 'Article brouillon caché',
+        'slug' => 'article-brouillon-cache',
+        'body' => 'Contenu de l\'article brouillon caché.',
+        'is_published' => false,
+        'published_at' => null,
+    ]);
+
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertSee('Article publié récent')
+        ->assertDontSee('Article brouillon caché');
+});
